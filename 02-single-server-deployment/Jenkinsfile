@@ -10,7 +10,7 @@ pipeline {
                 sh """
                     pwd
                     cd 02-single-server-deployment/
-                    pip install -r requirements.txt
+                    pip install -r requirements.txt --break-system-packages
                 """
             }
         }
