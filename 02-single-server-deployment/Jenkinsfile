@@ -8,21 +8,30 @@ pipeline {
         stage('Setup') {
             steps {
                 sh """
-                    cd ~/app/kodekloud-jenkins-project/02-single-server-deployment/
+                    pwd
+                    cd 02-single-server-deployment/
                     pip install -r requirements.txt
                 """
             }
         }
         stage('Test') {
             steps {
-                sh "pytest"
+                echo "Testing Start..."
+                sh """
+                    pwd
+                    pytest
+                """
             }
         }
 
         stage('Package code') {
             steps {
-                sh "zip -r myapp.zip ./* -x '*.git*'"
-                sh "ls -lart"
+                sh """
+                    echo 'Packaging Code Start...'
+                    pwd
+                    zip -r myapp.zip ./* -x '*.git*'"
+                    ls -lart
+                """
             }
         }
 
@@ -30,6 +39,8 @@ pipeline {
             steps {
                 withCredentials([sshUserPrivateKey(credentialsId: 'ssh-key-pair', keyFileVariable: 'MY_SSH_KEY', usernameVariable: 'username')]) {
                     sh '''
+                    echo 'Deployment Start Here..!'
+                    pwd
                     scp -i $MY_SSH_KEY -o StrictHostKeyChecking=no myapp.zip  ${username}@${SERVER_IP}:/home/ec2-user/
                     ssh -i $MY_SSH_KEY -o StrictHostKeyChecking=no ${username}@${SERVER_IP} << EOF
                         unzip -o /home/ec2-user/myapp.zip -d /home/ec2-user/app/
