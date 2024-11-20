@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    stage {
+    stages {
         stage("Testing") {
             steps {
                 sh "echo This is testing Jenkinsfile2"
