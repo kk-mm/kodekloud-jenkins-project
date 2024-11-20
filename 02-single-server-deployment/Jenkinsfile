@@ -31,7 +31,7 @@ pipeline {
                     echo 'Packaging Code Start...'
                     cd 02-single-server-deployment/
                     pwd
-                    zip -r myapp.zip ./* -x '*.git*'"
+                    zip -r myapp.zip ./* -x '*.git*'
                     ls -lart
                 """
             }
