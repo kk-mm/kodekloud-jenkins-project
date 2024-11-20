@@ -18,6 +18,7 @@ pipeline {
             steps {
                 echo "Testing Start..."
                 sh """
+                    cd 02-single-server-deployment/
                     pwd
                     pytest
                 """
@@ -28,6 +29,7 @@ pipeline {
             steps {
                 sh """
                     echo 'Packaging Code Start...'
+                    cd 02-single-server-deployment/
                     pwd
                     zip -r myapp.zip ./* -x '*.git*'"
                     ls -lart
