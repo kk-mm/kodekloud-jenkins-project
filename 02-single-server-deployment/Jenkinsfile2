@@ -1,0 +1,10 @@
+pipeline {
+    agent any
+    stage {
+        stage("Testing") {
+            steps {
+                sh "echo This is testing Jenkinsfile2"
+            }
+        }
+    }
+}
